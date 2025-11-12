@@ -1,10 +1,221 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Watch Anime Free - FreeNime</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- CSS Ditanam Langsung Di Sini -->
+    <style>
+        /* === Reset & Global === */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Font baru yang lebih modern */
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: #121212; /* Latar belakang gelap (Dark Mode) */
+            color: #eaeaea; /* Teks terang */
+        }
+
+        main {
+            max-width: 1200px; /* Batas lebar konten */
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        a {
+            color: #3b82f6; /* Biru cerah untuk link */
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #60a5fa; /* Biru lebih cerah saat hover */
+        }
+
+        /* === Header / Navigasi === */
+        header {
+            background-color: #1f1f1f; /* Sedikit lebih terang dari body */
+            border-bottom: 1px solid #333;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            display: flex; /* Mengatur item (judul & menu) secara horizontal */
+            justify-content: space-between; /* Memberi jarak antara judul & menu */
+            align-items: center; /* Menjaga semuanya tetap di tengah (vertikal) */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav h1 {
+            margin: 0;
+            font-size: 1.75rem;
+            font-weight: 900; /* Super tebal */
+        }
+
+        nav h1 a {
+            color: #eaeaea; /* Warna judul */
+            letter-spacing: -1px;
+        }
+
+        nav h1 a:hover {
+            color: #fff;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px; /* Jarak antar menu */
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul a {
+            font-size: 1rem;
+            font-weight: 600;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent; /* Garis bawah transparan (untuk efek hover) */
+        }
+
+        /* Efek hover untuk link menu */
+        nav ul a:hover {
+            color: #fff;
+            border-bottom-color: #3b82f6; /* Garis bawah muncul saat hover */
+        }
+
+        /* === Grid Anime (Pengganti Tabel) === */
+        .anime-grid {
+            display: grid;
+            gap: 30px; /* Jarak antar kartu anime */
+        }
+
+        .anime-card {
+            background-color: #1f1f1f;
+            border-radius: 12px;
+            overflow: hidden; /* Memastikan sudut membulat */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: grid;
+            /* Layout modern: 1 bagian untuk poster, 2 bagian untuk trailer */
+            grid-template-columns: 1fr 2fr; 
+            border: 1px solid #333;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .anime-card:hover {
+            transform: translateY(-5px); /* Efek terangkat saat hover */
+            box-shadow: 0 8px 15px rgba(59, 130, 246, 0.2); /* Bayangan biru */
+        }
+
+        .card-left {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-left h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .card-left img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #444;
+            margin-top: 10px;
+            aspect-ratio: 3 / 4; /* Rasio poster (lebar 3, tinggi 4) */
+            object-fit: cover; /* Memastikan gambar pas tanpa penyok */
+            transition: opacity 0.2s ease;
+        }
+
+        .card-left a {
+            display: block; /* Agar seluruh area gambar bisa diklik */
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Teks "Lihat Playlist" yang muncul saat hover */
+        .card-left a span {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            opacity: 0; /* Sembunyi secara default */
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+
+        .card-left a:hover span {
+            opacity: 1; /* Muncul saat hover */
+            transform: translateY(0);
+        }
+
+        .card-left a:hover img {
+            opacity: 0.8; /* Gambar sedikit redup saat hover */
+        }
+
+        .card-right {
+            padding: 20px;
+        }
+
+        .card-right iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 300px; /* Tinggi minimal trailer */
+            border: none;
+            border-radius: 8px;
+            aspect-ratio: 16 / 9; /* Rasio video widescreen */
+        }
+
+        /* === Tampilan Responsive (HP) === */
+        @media (max-width: 900px) {
+            .anime-card {
+                /* Ubah layout jadi 1 kolom (gambar di atas, trailer di bawah) */
+                grid-template-columns: 1fr; 
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                /* Tumpuk judul dan menu di HP */
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .card-left h3 {
+                font-size: 1.25rem; /* Kecilkan judul di HP */
+            }
+        }
+
+        /* === Footer === */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
 
@@ -22,11 +233,13 @@
     <main>
         <div class="anime-grid">
 
+            <!-- CARD 1: FRAN -->
             <div class="anime-card">
                 <div class="card-left">
                     <h3>Reincarnated as a Sword</h3>
                     <a href="https://youtube.com/playlist?list=PLxSscENEp7Ji52rlnhyo-0mwaSDAKb69P&feature=shared" target="_blank" rel="noopener noreferrer">
-                        <img src="fran.jpeg" alt="Banner Fran">
+                        <img src="fran.jpeg" alt="Banner Fran" 
+                             onerror="this.src='https://placehold.co/300x400/1f1f1f/eaeaea?text=Fran'">
                         <span>Lihat Playlist</span>
                     </a>
                 </div>
@@ -35,11 +248,13 @@
                 </div>
             </div>
 
+            <!-- CARD 2: TSUMASHO -->
             <div class="anime-card">
                 <div class="card-left">
                     <h3>I'm Getting Married to a Girl I Hate in My Class</h3>
                     <a href="https://youtube.com/playlist?list=PLxSscENEp7Jh0ECnqFsNWdlLCAiYVUxFq&feature=shared" target="_blank" rel="noopener noreferrer">
-                        <img src="tsumasho.jpeg" alt="Banner Tsumasho">
+                        <img src="tsumasho.jpeg" alt="Banner Tsumasho"
+                             onerror="this.src='https://placehold.co/300x400/1f1f1f/eaeaea?text=Tsumasho'">
                         <span>Lihat Playlist</span>
                     </a>
                 </div>
@@ -48,11 +263,13 @@
                 </div>
             </div>
 
+            <!-- CARD 3: ROUGE -->
             <div class="anime-card">
                 <div class="card-left">
                     <h3>Metallic Rouge</h3>
                     <a href="https://youtube.com/playlist?list=PLxSscENEp7Jix8lSA4pVU_gn3TbjTg1Pb&feature=shared" target="_blank" rel="noopener noreferrer">
-                        <img src="Rouge.jpeg" alt="Banner Rouge">
+                        <img src="Rouge.jpeg" alt="Banner Rouge"
+                             onerror="this.src='https://placehold.co/300x400/1f1f1f/eaeaea?text=Rouge'">
                         <span>Lihat Playlist</span>
                     </a>
                 </div>
@@ -61,11 +278,13 @@
                 </div>
             </div>
 
+            <!-- CARD 4: UNDEAD -->
             <div class="anime-card">
                 <div class="card-left">
                     <h3>Undead Murder Farce</h3>
                     <a href="https://youtube.com/playlist?list=PLxSscENEp7Jgye3e1_USJ1KdATNxP9svZ&feature=shared" target="_blank" rel="noopener noreferrer">
-                        <img src="Undead Farce.jpeg" alt="Banner Undead">
+                        <img src="Undead Farce.jpeg" alt="Banner Undead"
+                             onerror="this.src='https://placehold.co/300x400/1f1f1f/eaeaea?text=Undead'">
                         <span>Lihat Playlist</span>
                     </a>
                 </div>
@@ -74,7 +293,27 @@
                 </div>
             </div>
              
+            <!-- CARD 5: ROOM HERO (Placeholder) -->
             <div class="anime-card">
                 <div class="card-left">
                     <h3>Chillin' in Another World</h3>
                     <a href="#" target="_blank" rel="noopener noreferrer">
+                        <img src="" alt="Banner Room Hero"
+                             onerror="this.src='https://placehold.co/300x400/1f1f1f/eaeaea?text=Room+Hero'">
+                        <span>Lihat Playlist</span>
+                    </a>
+                </div>
+                <div class="card-right">
+                    <iframe src="https://www.youtube.com/embed/dtxamg4Uzrk?si=zUPHy6ijD8hLdrXM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+
+        </div> <!-- .anime-grid -->
+    </main>
+
+    <footer>
+        <p>&copy; 2025 FreeNime. Dibuat dengan cinta.</p>
+    </footer>
+
+</body>
+</html>
